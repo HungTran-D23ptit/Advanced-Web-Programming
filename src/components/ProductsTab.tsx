@@ -31,7 +31,9 @@ import {
   RefreshCw,
   AlertTriangle,
   Check,
+  Heart,
 } from 'lucide-react';
+import { useFavorites } from '../context';
 
 interface ProductsTabProps {
   onNavigateToCart?: () => void;
@@ -39,6 +41,7 @@ interface ProductsTabProps {
 
 export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) => {
   const dispatch = useAppDispatch();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const { items: products, status, error, searchTerm, selectedCategory } =
     useAppSelector((state) => state.products);
   const cartItems = useAppSelector((state) => state.cart.items);
@@ -267,6 +270,23 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
                     alt={prod.name}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
+                  {/* Nút Yêu thích (FavoritesContext toggle) */}
+                  <button
+                    type="button"
+                    className={`product-heart-btn ${isFavorite(prod.id) ? 'active' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(prod);
+                    }}
+                    title={isFavorite(prod.id) ? 'Bỏ yêu thích' : 'Thêm vào yêu thích'}
+                  >
+                    <Heart
+                      size={16}
+                      fill={isFavorite(prod.id) ? '#f43f5e' : 'none'}
+                      color={isFavorite(prod.id) ? '#f43f5e' : 'rgba(255,255,255,0.9)'}
+                    />
+                  </button>
+
                   <span
                     style={{
                       position: 'absolute',
@@ -288,7 +308,7 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
                     <span
                       style={{
                         position: 'absolute',
-                        top: '10px',
+                        bottom: '10px',
                         left: '10px',
                         background: 'var(--primary)',
                         color: '#fff',

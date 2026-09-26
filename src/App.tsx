@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { toggleDrawer } from './features/cart/cartSlice';
+import { useFavorites } from './context';
 import {
   initialCustomers,
   initialOrders,
@@ -17,10 +18,12 @@ import { CreateOrderTab } from './components/CreateOrderTab';
 import { ProductsTab } from './components/ProductsTab';
 import { CustomersTab } from './components/CustomersTab';
 import { CartTab, CartDrawer } from './features/cart';
+import { FavoritesTab } from './features/favorites';
 import {
   Package,
   ShoppingBag,
   ShoppingCart,
+  Heart,
   Users,
   Box,
   PlusCircle,
@@ -34,13 +37,14 @@ import {
 
 export function App() {
   const dispatch = useAppDispatch();
+  const { totalFavorites } = useFavorites();
   const products = useAppSelector((state) => state.products.items);
   const cartTotalQuantity = useAppSelector((state) => state.cart.totalQuantity);
   const productsCount = products.length;
 
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [activeTab, setActiveTab] = useState<
-    'products' | 'cart' | 'orders' | 'create-order' | 'customers'
+    'products' | 'favorites' | 'cart' | 'orders' | 'create-order' | 'customers'
   >('products');
   const [customers, setCustomers] = useState<Customer[]>(initialCustomers);
   const [orders, setOrders] = useState<Order[]>(initialOrders);
@@ -126,7 +130,7 @@ export function App() {
           <div>
             <h1 className="brand-title">HỆ THỐNG QUẢN LÝ BÁN HÀNG & ĐƠN HÀNG</h1>
             <div className="brand-subtitle">
-              <span>E-Commerce & Order Management</span>
+              <span>E-Commerce, Redux & Favorites Context</span>
               <span className="student-tag">B23DCCC083 - TRẦN DUY HƯNG</span>
             </div>
           </div>
@@ -230,6 +234,35 @@ export function App() {
 
         <button
           type="button"
+          className={`nav-tab ${activeTab === 'favorites' ? 'active' : ''}`}
+          onClick={() => setActiveTab('favorites')}
+          style={{ position: 'relative' }}
+        >
+          <Heart
+            size={17}
+            color="var(--accent-rose)"
+            fill={totalFavorites > 0 ? 'var(--accent-rose)' : 'none'}
+          />{' '}
+          Yêu thích
+          {totalFavorites > 0 && (
+            <span
+              style={{
+                marginLeft: '6px',
+                background: 'var(--accent-rose)',
+                color: '#fff',
+                padding: '2px 7px',
+                borderRadius: '9999px',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+              }}
+            >
+              {totalFavorites}
+            </span>
+          )}
+        </button>
+
+        <button
+          type="button"
           className={`nav-tab ${activeTab === 'cart' ? 'active' : ''}`}
           onClick={() => setActiveTab('cart')}
           style={{ position: 'relative' }}
@@ -239,7 +272,7 @@ export function App() {
             <span
               style={{
                 marginLeft: '6px',
-                background: 'var(--accent-rose)',
+                background: 'var(--primary)',
                 color: '#fff',
                 padding: '2px 7px',
                 borderRadius: '9999px',
@@ -281,6 +314,10 @@ export function App() {
       <main>
         {activeTab === 'products' && (
           <ProductsTab onNavigateToCart={() => setActiveTab('cart')} />
+        )}
+
+        {activeTab === 'favorites' && (
+          <FavoritesTab onNavigateToProducts={() => setActiveTab('products')} />
         )}
 
         {activeTab === 'cart' && (
