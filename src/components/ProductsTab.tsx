@@ -49,7 +49,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addedAnimationId, setAddedAnimationId] = useState<string | null>(null);
 
-  // Form states for adding new product
   const [sku, setSku] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -60,14 +59,12 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
     'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80'
   );
 
-  // Fetch initial products via createAsyncThunk if idle
   useEffect(() => {
     if (status === 'idle') {
       dispatch(fetchProducts());
     }
   }, [status, dispatch]);
 
-  // Lọc sản phẩm theo từ khóa và danh mục
   const filteredProducts = products.filter((p) => {
     const matchesSearch =
       p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -77,7 +74,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
     return matchesSearch && matchesCat;
   });
 
-  // Áp dụng Custom Hook usePagination<Product>
   const {
     currentPage,
     totalPages,
@@ -153,7 +149,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* Header Bar & Search Controls */}
       <div className="glass-panel" style={{ padding: '18px 22px' }}>
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
           <div style={{ position: 'relative', width: '100%', maxWidth: '380px' }}>
@@ -175,7 +170,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
           </div>
         </div>
 
-        {/* Category Filter Pills */}
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
           <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginRight: '4px' }}>
             Danh mục:
@@ -193,7 +187,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
         </div>
       </div>
 
-      {/* Trạng thái ERROR / FAILED */}
       {status === 'failed' && (
         <div className="glass-panel error-state-box">
           <div className="error-icon-wrap">
@@ -215,7 +208,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
         </div>
       )}
 
-      {/* Trạng thái LOADING SKELETON */}
       {status === 'loading' && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
           {[1, 2, 3, 4, 5, 6].map((idx) => (
@@ -236,7 +228,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
         </div>
       )}
 
-      {/* Trạng thái SUCCEEDED - Hiển thị sản phẩm */}
       {status === 'succeeded' && paginatedProducts.length === 0 && (
         <div className="glass-panel" style={{ textAlign: 'center', padding: '48px 20px', color: 'var(--text-dim)' }}>
           <Box size={44} style={{ margin: '0 auto 12px', opacity: 0.5 }} />
@@ -270,7 +261,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
                     alt={prod.name}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
-                  {/* Nút Yêu thích (FavoritesContext toggle) */}
                   <button
                     type="button"
                     className={`product-heart-btn ${isFavorite(prod.id) ? 'active' : ''}`}
@@ -370,7 +360,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
                     </span>
                   </div>
 
-                  {/* Add to Cart Actions */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '8px', paddingTop: '10px', borderTop: '1px solid var(--border-subtle)' }}>
                     <button
                       type="button"
@@ -408,7 +397,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
         </div>
       )}
 
-      {/* Pagination Component */}
       {status === 'succeeded' && filteredProducts.length > 0 && (
         <Pagination
           currentPage={currentPage}
@@ -429,7 +417,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
         />
       )}
 
-      {/* Khu vực Chính sách & Hướng dẫn */}
       <div className="glass-panel" style={{ marginTop: '12px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
           <div className="brand-icon" style={{ width: '38px', height: '38px' }}>
@@ -522,7 +509,6 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({ onNavigateToCart }) =>
         </Accordion>
       </div>
 
-      {/* Modal Thêm sản phẩm mới */}
       {isModalOpen && (
         <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>

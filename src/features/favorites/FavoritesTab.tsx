@@ -35,7 +35,6 @@ export const FavoritesTab: React.FC<FavoritesTabProps> = ({ onNavigateToProducts
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      {/* Header Bar */}
       <div className="glass-panel" style={{ padding: '18px 24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -85,7 +84,6 @@ export const FavoritesTab: React.FC<FavoritesTabProps> = ({ onNavigateToProducts
         </div>
       </div>
 
-      {/* Main Wishlist Content */}
       {favorites.length === 0 ? (
         <div className="glass-panel" style={{ textAlign: 'center', padding: '60px 20px', color: 'var(--text-dim)' }}>
           <div
@@ -136,7 +134,6 @@ export const FavoritesTab: React.FC<FavoritesTabProps> = ({ onNavigateToProducts
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
 
-                  {/* Nút Xóa khỏi yêu thích */}
                   <button
                     type="button"
                     className="btn-heart-active"
@@ -212,7 +209,6 @@ export const FavoritesTab: React.FC<FavoritesTabProps> = ({ onNavigateToProducts
                     </span>
                   </div>
 
-                  {/* Actions */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '8px', paddingTop: '10px', borderTop: '1px solid var(--border-subtle)' }}>
                     <button
                       type="button"
@@ -249,7 +245,6 @@ export const FavoritesTab: React.FC<FavoritesTabProps> = ({ onNavigateToProducts
         </div>
       )}
 
-      {/* KHỐI NHẬN XÉT SO SÁNH (5–7 DÒNG) THEO YÊU CẦU ĐỀ BÀI */}
       <div
         className="glass-panel"
         style={{
@@ -267,9 +262,6 @@ export const FavoritesTab: React.FC<FavoritesTabProps> = ({ onNavigateToProducts
             <h3 style={{ fontSize: '1.08rem', fontWeight: 700, color: 'var(--primary)' }}>
               Nhận xét so sánh: Context nâng cao (FavoritesContext + useMemo) vs. Redux Toolkit
             </h3>
-            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-              (Đoạn nhận xét 5–7 dòng theo đúng tiêu chí đánh giá đề bài)
-            </p>
           </div>
         </div>
 

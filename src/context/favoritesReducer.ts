@@ -3,9 +3,6 @@ import { Product } from '../types/order-management.types';
 
 const FAVORITES_STORAGE_KEY = 'ptit_ecommerce_favorites_v1';
 
-/**
- * Tải danh sách yêu thích ban đầu từ localStorage (nếu có)
- */
 export const getInitialFavoritesState = (): FavoritesState => {
   try {
     const saved = localStorage.getItem(FAVORITES_STORAGE_KEY);
@@ -28,9 +25,6 @@ export const getInitialFavoritesState = (): FavoritesState => {
   };
 };
 
-/**
- * Lưu danh sách yêu thích vào localStorage
- */
 const saveToLocalStorage = (items: Product[]) => {
   try {
     localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(items));
@@ -39,9 +33,6 @@ const saveToLocalStorage = (items: Product[]) => {
   }
 };
 
-/**
- * Pure Reducer quản lý trạng thái Sản phẩm yêu thích (mini-Redux pattern)
- */
 export function favoritesReducer(
   state: FavoritesState,
   action: FavoritesAction

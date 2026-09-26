@@ -72,10 +72,8 @@ export function App() {
     );
   };
 
-  // Handle Create New Order (from CreateOrderTab or CartTab)
   const handleCreateOrder = (newOrder: Order) => {
     setOrders((prev) => [newOrder, ...prev]);
-    // Also update customer's total spent
     setCustomers((prev) =>
       prev.map((cust) => {
         if (cust.id === newOrder.customerId) {
@@ -90,12 +88,10 @@ export function App() {
     );
   };
 
-  // Handle Add Customer
   const handleAddCustomer = (newCust: Customer) => {
     setCustomers((prev) => [newCust, ...prev]);
   };
 
-  // Calculate OrderStatusCountSummary
   const statusSummary: OrderStatusCountSummary = orders.reduce(
     (acc, order) => {
       acc[order.status] = (acc[order.status] || 0) + 1;
@@ -121,7 +117,6 @@ export function App() {
 
   return (
     <div className="app-container">
-      {/* Top Header */}
       <header className="app-header">
         <div className="brand-wrapper">
           <div className="brand-icon">
@@ -137,7 +132,6 @@ export function App() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {/* Nút Giỏ hàng trên Header với Badge thời gian thực */}
           <button
             type="button"
             className="cart-header-btn"
@@ -151,7 +145,6 @@ export function App() {
             )}
           </button>
 
-          {/* Nút chuyển đổi Giao diện Sáng / Tối */}
           <button
             type="button"
             className="theme-toggle-btn"
@@ -179,7 +172,6 @@ export function App() {
         </div>
       </header>
 
-      {/* Quick KPI Stats */}
       <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-icon-wrap" style={{ background: 'rgba(79, 70, 229, 0.1)', color: 'var(--primary)' }}>
@@ -222,7 +214,6 @@ export function App() {
         </div>
       </div>
 
-      {/* Clean Navigation Tabs */}
       <nav className="nav-tabs">
         <button
           type="button"
@@ -310,7 +301,6 @@ export function App() {
         </button>
       </nav>
 
-      {/* Main Tab Content */}
       <main>
         {activeTab === 'products' && (
           <ProductsTab onNavigateToCart={() => setActiveTab('cart')} />
@@ -353,7 +343,6 @@ export function App() {
         )}
       </main>
 
-      {/* Slide-over Quick Cart Drawer */}
       <CartDrawer
         onNavigateToCartTab={() => setActiveTab('cart')}
         onNavigateToCheckout={() => setActiveTab('cart')}

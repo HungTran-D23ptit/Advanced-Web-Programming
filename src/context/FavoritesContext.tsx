@@ -34,7 +34,6 @@ export const FavoritesProvider: React.FC<FavoritesProviderProps> = ({ children }
     dispatch({ type: 'CLEAR_FAVORITES' });
   }, []);
 
-  // Tối ưu hóa hiệu năng bằng useMemo để tránh re-render toàn app khi context value không đổi
   const contextValue = useMemo<FavoritesContextType>(
     () => ({
       favorites: state.items,
